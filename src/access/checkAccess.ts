@@ -15,6 +15,7 @@ const checkAccess = (
   if (needAccess === ACCESS_ENUM.NOT_LOGIN) {
     return true;
   }
+
   if (needAccess === ACCESS_ENUM.USER) {
     if (loginUserAccess === ACCESS_ENUM.NOT_LOGIN) {
       return false;

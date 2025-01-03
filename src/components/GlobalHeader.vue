@@ -34,35 +34,25 @@ import { routes } from "@/router/routes";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-const router = useRouter();
 
+const router = useRouter();
 const store = useStore();
-const loginUser = store.state?.user?.loginUser;
+const loginUser = computed(() => store.state?.user?.loginUser);
 
 const visibleRoutes = computed(() => {
-  return routes.filter((item, index) => {
+  return routes.filter((item) => {
     if (item.meta?.hideInMenu) {
       return false;
     }
-    if (!checkAccess(loginUser, item?.meta?.access as string)) {
+    if (!checkAccess(loginUser.value, item?.meta?.access as string)) {
       return false;
     }
     return true;
   });
 });
 
-// const visibleRoutes = routes.filter((item, index) => {
-//   if (item.meta?.hideInMenu) {
-//     return false;
-//   }
-//   if (!checkAccess(loginUser, item?.meta?.access as string)) {
-//     return false;
-//   }
-//   return true;
-// });
-//展示在菜单的路由数组
-
 const selectedKeys = ref(["/"]);
+
 router.afterEach((to) => {
   selectedKeys.value = [to.path];
 });
