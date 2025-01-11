@@ -1,5 +1,0 @@
-Error opening file "E:\Study\Full stack\project-2-OJ\oj-frontend\path\to\openapi.json" 
-ENOENT: no such file or directory, open 'E:\Study\Full stack\project-2-OJ\oj-frontend\path\to\openapi.json'
-ResolverError: Error opening file "E:\Study\Full stack\project-2-OJ\oj-frontend\path\to\openapi.json" 
-ENOENT: no such file or directory, open 'E:\Study\Full stack\project-2-OJ\oj-frontend\path\to\openapi.json'
-    at Object.read (C:\Users\86175\AppData\Local\npm-cache\_npx\a3521d5d8f143c4a\node_modules\@apidevtools\json-schema-ref-parser\dist\lib\resolvers\file.js:71:19)

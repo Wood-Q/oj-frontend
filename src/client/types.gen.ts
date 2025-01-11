@@ -3,19 +3,22 @@
 export type models_User = {
   createdAt?: string;
   deletedAt?: string;
+  /**
+   * gorm.Model
+   */
   id?: number;
   openid?: string;
   password?: string;
   unionid?: string;
   updatedAt?: string;
-  useraccount?: string;
+  user_account?: string;
   useravatar?: string;
   username?: string;
   userprofile?: string;
   userrole?: string;
 };
 
-export type PostV1UserSignInData = {
+export type PostV1AuthSignInData = {
   body: {
     /**
      * UserAccount
@@ -28,11 +31,11 @@ export type PostV1UserSignInData = {
   };
 };
 
-export type PostV1UserSignInResponse = string;
+export type PostV1AuthSignInResponse = string;
 
-export type PostV1UserSignInError = unknown;
+export type PostV1AuthSignInError = unknown;
 
-export type PostV1UserSignUpData = {
+export type PostV1AuthSignUpData = {
   body: {
     /**
      * UserAccount
@@ -49,6 +52,28 @@ export type PostV1UserSignUpData = {
   };
 };
 
-export type PostV1UserSignUpResponse = models_User;
+export type PostV1AuthSignUpResponse = models_User;
 
-export type PostV1UserSignUpError = unknown;
+export type PostV1AuthSignUpError = unknown;
+
+export type GetV1LoginUserResponse = models_User;
+
+export type GetV1LoginUserError = unknown;
+
+// export type GetV1UsersResponse = Array<models_User>;
+export type GetV1UsersResponse = any;
+
+export type GetV1UsersError = unknown;
+
+export type GetV1UsersByIdData = {
+  path: {
+    /**
+     * user ID
+     */
+    id: string;
+  };
+};
+
+export type GetV1UsersByIdResponse = models_User;
+
+export type GetV1UsersByIdError = unknown;

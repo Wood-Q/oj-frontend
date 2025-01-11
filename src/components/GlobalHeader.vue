@@ -22,7 +22,7 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <div>{{ store.state?.user?.loginUser?.userName ?? "未登录" }}</div>
+      <div>{{ store.state?.user?.loginUser?.username ?? "未登录" }}</div>
     </a-col>
   </a-row>
 </template>
