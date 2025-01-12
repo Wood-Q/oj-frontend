@@ -1,5 +1,5 @@
 import ACCESS_ENUM from "@/access/accessEnum";
-import { getV1LoginUser, getV1Users } from "@/client";
+import { getV1AuthLoginUser, getV1Users } from "@/client";
 import { StoreOptions } from "vuex";
 
 export default {
@@ -11,11 +11,11 @@ export default {
   }),
   actions: {
     async getLoginUser({ commit, state }, payload) {
-      const res = await getV1Users();
+      const res = await getV1AuthLoginUser();
       const users = res.data;
-      console.log("响应", users);
+      // console.log("响应", users.user.username);
       if (res.status === 200) {
-        commit("updateUser", res.data.users[0]);
+        commit("updateUser", users?.user);
       } else {
         commit("updateUser", {
           ...state.loginUser,

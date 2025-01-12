@@ -18,6 +18,10 @@ export type models_User = {
   userrole?: string;
 };
 
+export type GetV1AuthLoginUserResponse = any;
+
+export type GetV1AuthLoginUserError = unknown;
+
 export type PostV1AuthSignInData = {
   body: {
     /**
@@ -56,12 +60,7 @@ export type PostV1AuthSignUpResponse = models_User;
 
 export type PostV1AuthSignUpError = unknown;
 
-export type GetV1LoginUserResponse = models_User;
-
-export type GetV1LoginUserError = unknown;
-
-// export type GetV1UsersResponse = Array<models_User>;
-export type GetV1UsersResponse = any;
+export type GetV1UsersResponse = Array<models_User>;
 
 export type GetV1UsersError = unknown;
 

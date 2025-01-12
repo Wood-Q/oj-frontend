@@ -6,14 +6,14 @@ import {
   type OptionsLegacyParser,
 } from "@hey-api/client-axios";
 import type {
+  GetV1AuthLoginUserError,
+  GetV1AuthLoginUserResponse,
   PostV1AuthSignInData,
   PostV1AuthSignInError,
   PostV1AuthSignInResponse,
   PostV1AuthSignUpData,
   PostV1AuthSignUpError,
   PostV1AuthSignUpResponse,
-  GetV1LoginUserError,
-  GetV1LoginUserResponse,
   GetV1UsersError,
   GetV1UsersResponse,
   GetV1UsersByIdData,
@@ -27,6 +27,23 @@ export const client = createClient(
     withCredentials: true,
   })
 );
+
+/**
+ * get current login user
+ * get current login user .
+ */
+export const getV1AuthLoginUser = <ThrowOnError extends boolean = false>(
+  options?: OptionsLegacyParser<unknown, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    GetV1AuthLoginUserResponse,
+    GetV1AuthLoginUserError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "api/v1/auth/loginUser",
+  });
+};
 
 /**
  * auth user and return access and refresh token
@@ -58,24 +75,7 @@ export const postV1AuthSignUp = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     ...options,
-    url: "/v1/auth/sign/up",
-  });
-};
-
-/**
- * get login user
- * Get login user.
- */
-export const getV1LoginUser = <ThrowOnError extends boolean = false>(
-  options?: OptionsLegacyParser<unknown, ThrowOnError>
-) => {
-  return (options?.client ?? client).get<
-    GetV1LoginUserResponse,
-    GetV1LoginUserError,
-    ThrowOnError
-  >({
-    ...options,
-    url: "api/v1/loginUser",
+    url: "api/v1/auth/sign/up",
   });
 };
 
