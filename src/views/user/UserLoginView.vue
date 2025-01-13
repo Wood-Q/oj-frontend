@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { postV1AuthSignIn, PostV1AuthSignInData } from "../../client";
+import { postApiV1AuthSignIn, PostApiV1AuthSignInData } from "../../client";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -37,7 +37,7 @@ import { useStore } from "vuex";
 const router = useRouter();
 const store = useStore();
 /**表单信息 */
-const form = reactive<PostV1AuthSignInData>({
+const form = reactive<PostApiV1AuthSignInData>({
   body: {
     user_account: "",
     password: "",
@@ -45,7 +45,7 @@ const form = reactive<PostV1AuthSignInData>({
 });
 /**提交表单 */
 const handleSubmit = async () => {
-  const res = await postV1AuthSignIn(form);
+  const res = await postApiV1AuthSignIn(form);
   //登录成功跳转到主页
   if (res.status === 200) {
     alert("登陆成功" + JSON.stringify(res.data));

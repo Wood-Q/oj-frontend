@@ -6,25 +6,71 @@ import {
   type OptionsLegacyParser,
 } from "@hey-api/client-axios";
 import type {
-  GetV1AuthLoginUserError,
-  GetV1AuthLoginUserResponse,
-  PostV1AuthSignInData,
-  PostV1AuthSignInError,
-  PostV1AuthSignInResponse,
-  PostV1AuthSignUpData,
-  PostV1AuthSignUpError,
-  PostV1AuthSignUpResponse,
-  GetV1UsersError,
-  GetV1UsersResponse,
-  GetV1UsersByIdData,
-  GetV1UsersByIdError,
-  GetV1UsersByIdResponse,
+  GetApiV1AuthLoginUserError,
+  GetApiV1AuthLoginUserResponse,
+  PostApiV1AuthSignInData,
+  PostApiV1AuthSignInError,
+  PostApiV1AuthSignInResponse,
+  PostApiV1AuthSignUpData,
+  PostApiV1AuthSignUpError,
+  PostApiV1AuthSignUpResponse,
+  GetApiV1QuestionsError,
+  GetApiV1QuestionsResponse,
+  PostApiV1QuestionsData,
+  PostApiV1QuestionsError,
+  PostApiV1QuestionsResponse,
+  GetApiV1QuestionsByQuestionIdData,
+  GetApiV1QuestionsByQuestionIdError,
+  GetApiV1QuestionsByQuestionIdResponse,
+  PutApiV1QuestionsByQuestionIdData,
+  PutApiV1QuestionsByQuestionIdError,
+  PutApiV1QuestionsByQuestionIdResponse,
+  DeleteApiV1QuestionsByQuestionIdData,
+  DeleteApiV1QuestionsByQuestionIdError,
+  DeleteApiV1QuestionsByQuestionIdResponse,
+  GetApiV1QuestionsubmitError,
+  GetApiV1QuestionsubmitResponse,
+  PostApiV1QuestionsubmitData,
+  PostApiV1QuestionsubmitError,
+  PostApiV1QuestionsubmitResponse,
+  GetApiV1QuestionsubmitByQuestionIdData,
+  GetApiV1QuestionsubmitByQuestionIdError,
+  GetApiV1QuestionsubmitByQuestionIdResponse,
+  PutApiV1QuestionsubmitByQuestionIdData,
+  PutApiV1QuestionsubmitByQuestionIdError,
+  PutApiV1QuestionsubmitByQuestionIdResponse,
+  DeleteApiV1QuestionsubmitByQuestionIdData,
+  DeleteApiV1QuestionsubmitByQuestionIdError,
+  DeleteApiV1QuestionsubmitByQuestionIdResponse,
+  GetApiV1UsersError,
+  GetApiV1UsersResponse,
+  GetApiV1UsersByIdData,
+  GetApiV1UsersByIdError,
+  GetApiV1UsersByIdResponse,
 } from "./types.gen";
+
+// 获取特定的 Cookie 值
+function getCookie(name: any) {
+  const cookies = document.cookie.split(";"); // 将所有 cookie 分割成数组
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim(); // 去掉空格
+    if (cookie.startsWith(`${name}=`)) {
+      return cookie.substring(name.length + 1); // 返回 name= 后的部分
+    }
+  }
+  return null; // 如果没有找到，返回 null
+}
+
+// 提取 token
+const token = getCookie("token");
 
 export const client = createClient(
   createConfig({
     baseURL: "http://localhost:3000",
     withCredentials: true,
+    headers: {
+      Authorization: `${token}`,
+    },
   })
 );
 
@@ -32,16 +78,16 @@ export const client = createClient(
  * get current login user
  * get current login user .
  */
-export const getV1AuthLoginUser = <ThrowOnError extends boolean = false>(
+export const getApiV1AuthLoginUser = <ThrowOnError extends boolean = false>(
   options?: OptionsLegacyParser<unknown, ThrowOnError>
 ) => {
   return (options?.client ?? client).get<
-    GetV1AuthLoginUserResponse,
-    GetV1AuthLoginUserError,
+    GetApiV1AuthLoginUserResponse,
+    GetApiV1AuthLoginUserError,
     ThrowOnError
   >({
     ...options,
-    url: "api/v1/auth/loginUser",
+    url: "/api/v1/auth/loginUser",
   });
 };
 
@@ -49,16 +95,16 @@ export const getV1AuthLoginUser = <ThrowOnError extends boolean = false>(
  * auth user and return access and refresh token
  * Auth user and return access and refresh token.
  */
-export const postV1AuthSignIn = <ThrowOnError extends boolean = false>(
-  options: OptionsLegacyParser<PostV1AuthSignInData, ThrowOnError>
+export const postApiV1AuthSignIn = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<PostApiV1AuthSignInData, ThrowOnError>
 ) => {
   return (options?.client ?? client).post<
-    PostV1AuthSignInResponse,
-    PostV1AuthSignInError,
+    PostApiV1AuthSignInResponse,
+    PostApiV1AuthSignInError,
     ThrowOnError
   >({
     ...options,
-    url: "api/v1/auth/sign/in",
+    url: "/api/v1/auth/sign/in",
   });
 };
 
@@ -66,16 +112,210 @@ export const postV1AuthSignIn = <ThrowOnError extends boolean = false>(
  * create a new user
  * Create a new user.
  */
-export const postV1AuthSignUp = <ThrowOnError extends boolean = false>(
-  options: OptionsLegacyParser<PostV1AuthSignUpData, ThrowOnError>
+export const postApiV1AuthSignUp = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<PostApiV1AuthSignUpData, ThrowOnError>
 ) => {
   return (options?.client ?? client).post<
-    PostV1AuthSignUpResponse,
-    PostV1AuthSignUpError,
+    PostApiV1AuthSignUpResponse,
+    PostApiV1AuthSignUpError,
     ThrowOnError
   >({
     ...options,
-    url: "api/v1/auth/sign/up",
+    url: "/api/v1/auth/sign/up",
+  });
+};
+
+/**
+ * Get all questions
+ * Retrieve a list of all existing questions
+ */
+export const getApiV1Questions = <ThrowOnError extends boolean = false>(
+  options?: OptionsLegacyParser<unknown, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    GetApiV1QuestionsResponse,
+    GetApiV1QuestionsError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questions",
+  });
+};
+
+/**
+ * Create a new question
+ * Create a new question with the provided data
+ */
+export const postApiV1Questions = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<PostApiV1QuestionsData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostApiV1QuestionsResponse,
+    PostApiV1QuestionsError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questions",
+  });
+};
+
+/**
+ * Get a specific question by ID
+ * Retrieve a question by its ID
+ */
+export const getApiV1QuestionsByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<GetApiV1QuestionsByQuestionIdData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    GetApiV1QuestionsByQuestionIdResponse,
+    GetApiV1QuestionsByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questions/{question_id}",
+  });
+};
+
+/**
+ * Update an existing question
+ * Update a question based on its ID
+ */
+export const putApiV1QuestionsByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<PutApiV1QuestionsByQuestionIdData, ThrowOnError>
+) => {
+  return (options?.client ?? client).put<
+    PutApiV1QuestionsByQuestionIdResponse,
+    PutApiV1QuestionsByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questions/{question_id}",
+  });
+};
+
+/**
+ * Delete a question by ID
+ * Delete a specific question based on its ID
+ */
+export const deleteApiV1QuestionsByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<
+    DeleteApiV1QuestionsByQuestionIdData,
+    ThrowOnError
+  >
+) => {
+  return (options?.client ?? client).delete<
+    DeleteApiV1QuestionsByQuestionIdResponse,
+    DeleteApiV1QuestionsByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questions/{question_id}",
+  });
+};
+
+/**
+ * Get all question submissions
+ * Retrieve a list of all existing question submissions
+ */
+export const getApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
+  options?: OptionsLegacyParser<unknown, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    GetApiV1QuestionsubmitResponse,
+    GetApiV1QuestionsubmitError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questionsubmit",
+  });
+};
+
+/**
+ * Create a new question submit
+ * Create a new question submission with the provided data
+ */
+export const postApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<PostApiV1QuestionsubmitData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostApiV1QuestionsubmitResponse,
+    PostApiV1QuestionsubmitError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questionsubmit",
+  });
+};
+
+/**
+ * Get a specific question submission by ID
+ * Retrieve a question submission by its ID
+ */
+export const getApiV1QuestionsubmitByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<
+    GetApiV1QuestionsubmitByQuestionIdData,
+    ThrowOnError
+  >
+) => {
+  return (options?.client ?? client).get<
+    GetApiV1QuestionsubmitByQuestionIdResponse,
+    GetApiV1QuestionsubmitByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questionsubmit/{question_id}",
+  });
+};
+
+/**
+ * Update an existing question submission
+ * Update a question submission based on its ID
+ */
+export const putApiV1QuestionsubmitByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<
+    PutApiV1QuestionsubmitByQuestionIdData,
+    ThrowOnError
+  >
+) => {
+  return (options?.client ?? client).put<
+    PutApiV1QuestionsubmitByQuestionIdResponse,
+    PutApiV1QuestionsubmitByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questionsubmit/{question_id}",
+  });
+};
+
+/**
+ * Delete a question submission by ID
+ * Delete a specific question submission based on its ID
+ */
+export const deleteApiV1QuestionsubmitByQuestionId = <
+  ThrowOnError extends boolean = false
+>(
+  options: OptionsLegacyParser<
+    DeleteApiV1QuestionsubmitByQuestionIdData,
+    ThrowOnError
+  >
+) => {
+  return (options?.client ?? client).delete<
+    DeleteApiV1QuestionsubmitByQuestionIdResponse,
+    DeleteApiV1QuestionsubmitByQuestionIdError,
+    ThrowOnError
+  >({
+    ...options,
+    url: "/api/v1/questionsubmit/{question_id}",
   });
 };
 
@@ -83,16 +323,16 @@ export const postV1AuthSignUp = <ThrowOnError extends boolean = false>(
  * get all exists users
  * Get all exists users.
  */
-export const getV1Users = <ThrowOnError extends boolean = false>(
+export const getApiV1Users = <ThrowOnError extends boolean = false>(
   options?: OptionsLegacyParser<unknown, ThrowOnError>
 ) => {
   return (options?.client ?? client).get<
-    GetV1UsersResponse,
-    GetV1UsersError,
+    GetApiV1UsersResponse,
+    GetApiV1UsersError,
     ThrowOnError
   >({
     ...options,
-    url: "api/v1/users",
+    url: "/api/v1/users",
   });
 };
 
@@ -100,15 +340,15 @@ export const getV1Users = <ThrowOnError extends boolean = false>(
  * get user by given ID
  * Get user by given ID.
  */
-export const getV1UsersById = <ThrowOnError extends boolean = false>(
-  options: OptionsLegacyParser<GetV1UsersByIdData, ThrowOnError>
+export const getApiV1UsersById = <ThrowOnError extends boolean = false>(
+  options: OptionsLegacyParser<GetApiV1UsersByIdData, ThrowOnError>
 ) => {
   return (options?.client ?? client).get<
-    GetV1UsersByIdResponse,
-    GetV1UsersByIdError,
+    GetApiV1UsersByIdResponse,
+    GetApiV1UsersByIdError,
     ThrowOnError
   >({
     ...options,
-    url: "api/v1/users/{id}",
+    url: "/api/v1/users/{id}",
   });
 };
