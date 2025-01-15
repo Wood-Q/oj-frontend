@@ -1,7 +1,10 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef" style="min-height: 400px" />
+  <div
+    id="code-editor"
+    ref="codeEditorRef"
+    style="min-height: 400px; height: 80vh"
+  />
   {{ value }}
-  <!-- <a-button @click="fillValue">填充值</a-button> -->
 </template>
 
 <script setup lang="ts">
@@ -27,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const codeEditorRef = ref();
 const codeEditor = ref();
-const value = ref("hello world");
+const value = ref("");
 
 const fillValue = () => {
   if (!codeEditor.value) {
@@ -52,9 +55,6 @@ onMounted(() => {
     },
     readOnly: false,
     theme: "vs-dark",
-    // lineNumbers: "off",
-    // roundedSelection: false,
-    // scrollBeyondLastLine: false,
   });
 
   // 编辑 监听内容变化

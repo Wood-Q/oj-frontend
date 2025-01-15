@@ -141,34 +141,23 @@ export const getApiV1Questions = <ThrowOnError extends boolean = false>(
     url: "/api/v1/questions",
   });
 };
-// 定义分页请求的参数
-interface GetApiV1QuestionsRequestParams {
-  page: number;
-  page_size: number;
-}
 
 export const getApiV1QuestionsByPage = <ThrowOnError extends boolean = false>(
-  options?: OptionsLegacyParser<unknown, ThrowOnError>
+  page_size: number,
+  page: number,
+  title: string,
+  tags: []
 ) => {
-  // 获取分页参数，默认页码为 1，默认每页 10 条
-  const page = options?.params?.page || 1;
-  const pageSize = options?.params?.page_size || 10;
-
-  // 发起 GET 请求并传递分页参数
-  return (options?.client ?? client).get<
+  const retags = tags.join(",");
+  return client.get<
     GetApiV1QuestionsResponse,
     GetApiV1QuestionsError,
     ThrowOnError
   >({
-    ...options,
-    url: "/api/v1/questions/dividePage/questions", // 后端接口路径
-    params: {
-      // 将分页参数作为查询字符串传递
-      page,
-      page_size: pageSize,
-    },
+    url: `/api/v1/questions/dividePage/questions?page=${page}&page_size=${page_size}&title=${title}&tags=${retags}`,
   });
 };
+
 /**
  * Create a new question
  * Create a new question with the provided data
@@ -193,15 +182,13 @@ export const postApiV1Questions = <ThrowOnError extends boolean = false>(
 export const getApiV1QuestionsByQuestionId = <
   ThrowOnError extends boolean = false
 >(
-  question_id: number,
-  options?: OptionsLegacyParser<GetApiV1QuestionsByQuestionIdData, ThrowOnError>
+  question_id: number
 ) => {
-  return (options?.client ?? client).get<
+  return client.get<
     GetApiV1QuestionsByQuestionIdResponse,
     GetApiV1QuestionsByQuestionIdError,
     ThrowOnError
   >({
-    ...options,
     url: `/api/v1/questions/${question_id}`,
   });
 };
@@ -273,7 +260,7 @@ export const getApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
 export const postApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
   options: OptionsLegacyParser<PostApiV1QuestionsubmitData, ThrowOnError>
 ) => {
-  return (options?.client ?? client).post<
+  return client.post<
     PostApiV1QuestionsubmitResponse,
     PostApiV1QuestionsubmitError,
     ThrowOnError

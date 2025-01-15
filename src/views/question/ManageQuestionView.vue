@@ -6,8 +6,8 @@
       :data="dataList"
       :pagination="{
         showTotal: true,
-        pageSize: searchParams.params.page_size,
-        current: searchParams.params.page,
+        pageSize: searchParams.page_size,
+        current: searchParams.page,
         total: total,
       }"
       @page-change="onPageChange"
@@ -61,14 +61,17 @@ const router = useRouter();
 const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref({
-  params: {
-    page: 1,
-    page_size: 2,
-  },
+  page: 1,
+  page_size: 10,
 });
 
 const loadData = async () => {
-  const res = await getApiV1QuestionsByPage(searchParams.value);
+  const res = await getApiV1QuestionsByPage(
+    searchParams.value.page_size,
+    searchParams.value.page,
+    "",
+    []
+  );
   if (res.status === 200) {
     dataList.value = res.data.questions;
     total.value = res.data.total_count;
@@ -76,17 +79,14 @@ const loadData = async () => {
     Message.error("加载失败");
   }
 };
-
 onMounted(() => {
   loadData();
 });
 
 const onPageChange = (pageNum: number) => {
   searchParams.value = {
-    params: {
-      page: pageNum,
-      page_size: searchParams.value.params.page_size,
-    },
+    page: pageNum,
+    page_size: searchParams.value.page_size,
   };
 };
 

@@ -135,6 +135,7 @@ onMounted(() => {
 
 const form = reactive({
   body: {
+    question_id: Math.floor(Math.random() * 10000) + 1,
     title: "",
     content: "",
     answer: "",
@@ -165,14 +166,14 @@ const doSubmit = async () => {
       },
     };
     const res = await putApiV1QuestionsByQuestionId(questionId, data);
-    if (res.status === 200) {
+    if (res.status === 201) {
       Message.success("更新成功");
     } else {
       Message.error("更新失败" + res.error);
     }
   } else {
     const res = await postApiV1Questions(form);
-    if (res.status === 200) {
+    if (res.status === 201) {
       Message.success("创建成功");
     } else {
       Message.error("创建失败" + res.error);
