@@ -10,11 +10,18 @@ export type models_Question = {
    * gorm.Model
    */
   id?: number;
-  judge_case?: string;
-  judge_config?: string;
+  judge_case?: {
+    input: string;
+    output: string;
+  }[]; // judge_case 是包含 input 和 output 字符串的对象数组
+  judge_config?: {
+    memoryLimit: number;
+    stackLimit: number;
+    timeLimit: number;
+  }; // judge_config 是一个包含限制字段的对象
   question_id?: number;
   submitnum?: number;
-  tags?: string;
+  tags?: string[]; // tags 是一个字符串数组
   title?: string;
   updatedAt?: string;
   user_id?: number;

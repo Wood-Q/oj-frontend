@@ -10,7 +10,7 @@ const checkAccess = (
   loginUser: any,
   needAccess: string = ACCESS_ENUM.NOT_LOGIN
 ) => {
-  const loginUserAccess = loginUser?.userRole ?? ACCESS_ENUM.NOT_LOGIN;
+  const loginUserAccess = loginUser?.userrole ?? ACCESS_ENUM.NOT_LOGIN;
 
   if (needAccess === ACCESS_ENUM.NOT_LOGIN) {
     return true;

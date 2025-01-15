@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state: () => ({
     loginUser: {
-      username: "未登录",
+      userRole: "notLogin",
     },
   }),
   actions: {
@@ -22,7 +22,7 @@ export default {
           userRole: ACCESS_ENUM.NOT_LOGIN,
         });
       }
-      console.log("用户信息", state.loginUser.username);
+      console.log("用户信息", state.loginUser);
     },
   },
   mutations: {
