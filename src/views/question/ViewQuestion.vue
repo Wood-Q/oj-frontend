@@ -42,7 +42,24 @@
         </a-tabs>
       </a-col>
       <a-col :md="12" :xs="24">
-        <CodeEditor />
+        <a-form :model="form" layout="inline">
+          <a-form-item field="name" label="编程语言" style="min-width: 240px">
+            <a-select
+              v-model="form.body.language"
+              :style="{ width: '320px' }"
+              placeholder="选择编程语言"
+            >
+              <a-option>python</a-option>
+              <a-option>go</a-option>
+              <a-option>java</a-option>
+            </a-select>
+          </a-form-item>
+        </a-form>
+        <CodeEditor
+          :value="form.body.code"
+          :language="form.body.language"
+          :handleChange="handleCodeChange"
+        />
         <a-divider size="0" />
         <a-button type="primary" style="min-width: 200px" @click="doSubmit"
           >提交答案</a-button
@@ -69,7 +86,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   id: () => "",
 });
-
+const handleCodeChange = (newCode: string) => {
+  form.value.body.code = newCode;
+};
 const question = ref();
 
 const loadData = async () => {
@@ -82,12 +101,16 @@ const loadData = async () => {
   }
 };
 const form = ref({
-  language: "cpp",
-  code: "",
+  body: {
+    language: "java",
+    code: "",
+    question_id: Number(props.id),
+  },
 });
 const doSubmit = async () => {
+  console.log("提交的代码为", form.value);
   const res = await postApiV1Questionsubmit(form.value);
-  if (res.status === 200) {
+  if (res.status === 201) {
     Message.success("提交成功");
   } else {
     Message.error("提交失败" + res.error);

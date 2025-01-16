@@ -168,8 +168,12 @@ export type GetApiV1QuestionsubmitResponse = any;
 
 export type GetApiV1QuestionsubmitError = unknown;
 
-export type PostApiV1QuestionsubmitData = any;
-
+export type PostApiV1QuestionsubmitData = {
+  /**
+   * Question Information
+   */
+  body: models_QuestionSubmit;
+};
 export type PostApiV1QuestionsubmitResponse = any;
 
 export type PostApiV1QuestionsubmitError = unknown;

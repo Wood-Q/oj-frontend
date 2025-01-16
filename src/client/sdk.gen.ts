@@ -19,7 +19,6 @@ import type {
   PostApiV1QuestionsData,
   PostApiV1QuestionsError,
   PostApiV1QuestionsResponse,
-  GetApiV1QuestionsByQuestionIdData,
   GetApiV1QuestionsByQuestionIdError,
   GetApiV1QuestionsByQuestionIdResponse,
   PutApiV1QuestionsByQuestionIdData,
@@ -249,7 +248,7 @@ export const getApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     ...options,
-    url: "/api/v1/questionsubmit",
+    url: "/api/v1/questionsSubmit",
   });
 };
 
@@ -266,7 +265,7 @@ export const postApiV1Questionsubmit = <ThrowOnError extends boolean = false>(
     ThrowOnError
   >({
     ...options,
-    url: "/api/v1/questionsubmit",
+    url: "/api/v1/questionsSubmit",
   });
 };
 
@@ -288,7 +287,7 @@ export const getApiV1QuestionsubmitByQuestionId = <
     ThrowOnError
   >({
     ...options,
-    url: "/api/v1/questionsubmit/{question_id}",
+    url: "/api/v1/questionsSubmit/{question_id}",
   });
 };
 
@@ -310,7 +309,7 @@ export const putApiV1QuestionsubmitByQuestionId = <
     ThrowOnError
   >({
     ...options,
-    url: "/api/v1/questionsubmit/{question_id}",
+    url: "/api/v1/questionsSubmit/{question_id}",
   });
 };
 
@@ -332,7 +331,7 @@ export const deleteApiV1QuestionsubmitByQuestionId = <
     ThrowOnError
   >({
     ...options,
-    url: "/api/v1/questionsubmit/{question_id}",
+    url: "/api/v1/questionsSubmit/{question_id}",
   });
 };
 
