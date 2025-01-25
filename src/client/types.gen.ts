@@ -97,6 +97,7 @@ export type PostApiV1AuthSignUpData = {
      * UserRole
      */
     user_role: string;
+    user_name: string;
   };
 };
 

@@ -19,9 +19,18 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" style="width: 120px" html-type="submit"
-          >登录</a-button
-        >
+        <a-button type="primary" style="width: 120px" html-type="submit">
+          登录
+        </a-button>
+        <a-form-item>
+          <a-button
+            style="width: 120px; margin-top: 10px; margin-left: 90px"
+            @click="goToRegister"
+            type="text"
+          >
+            注册账户
+          </a-button>
+        </a-form-item>
       </a-form-item>
     </a-form>
   </div>
@@ -59,5 +68,10 @@ const handleSubmit = async () => {
   }
   console.log(res);
   // alert(JSON.stringify(form));
+};
+
+/**跳转到注册页面 */
+const goToRegister = () => {
+  router.push("/user/register");
 };
 </script>
