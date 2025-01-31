@@ -65,7 +65,7 @@ const token = getCookie("token");
 
 export const client = createClient(
   createConfig({
-    baseURL: "http://backend:3000",
+    baseURL: "http://127.0.0.1:3000",
     withCredentials: true,
     headers: {
       Authorization: `${token}`,
